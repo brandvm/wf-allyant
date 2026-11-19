@@ -1,4 +1,4 @@
-# <CLIENT> — Webflow custom code
+# Allyant — Webflow custom code
 
 Agent instructions for this repository. Codex, Cursor and similar tools read
 this file directly; Claude Code reads it through `CLAUDE.md`. It is the single
@@ -6,16 +6,17 @@ source of agent rules — edit this file, never a copy of it.
 
 ## Project facts
 
-Fill these in when the repo is created from the template (`pnpm new-project`).
+Filled in by `pnpm new-project` on 2026-11-19.
 
-- Client / site: `<CLIENT>`
-- GitHub: `<ORG>/<REPO>`, default branch `master`
-- Webflow site ID: `<SITE_ID>`
-- Webflow MCP server: `webflow-<SLUG>` (`.mcp.json`)
-- Staging site: `https://<SLUG>.webflow.io`
-- Staging bundles: `https://<ORG>.github.io/<REPO>/`
-- Production domain: `<DOMAIN or "not attached yet">`
-- Production release: `<RELEASE in the head snippet, or "none yet">`
+- Client / site: `Allyant`
+- GitHub: `brandvm/wf-allyant`, default branch `master`
+- Webflow site ID: `6aff472323df3b1e36cc8be7`
+- Webflow MCP server: `webflow-allyant` (`.mcp.json`)
+- Staging site: `https://wf-allyant.webflow.io`
+- Figma file: `https://www.figma.com/design/kQg1wvFPe0W9UO9seCB4ke/Allyant` (key `kQg1wvFPe0W9UO9seCB4ke`; source of truth: page "For Dev", node `632:120`)
+- Staging bundles: `https://brandvm.github.io/wf-allyant/`
+- Production domain: `not attached yet`
+- Production release: `none yet`
 
 ## Who owns what
 
@@ -29,6 +30,29 @@ that the Designer could have expressed becomes a hidden override: the next
 person changes that style in the Designer, nothing happens, and the only fix
 is edit `src/` → push → wait for staging → reload the Designer. Every project
 built from this template has lost time to that loop.
+
+## Reuse what the site already has
+
+The site starts from the starter site, which already holds the control
+components (`webflow-build` › starter-site.md › D2): **Icon**, **Icon Size**,
+**C | Button** (Button Content / Size / Color), **C | Icon Button**,
+**C | Video**, **Section Head**, the page shell (G | Page W, G | Nav W,
+G | Footer W, G | Components) and the style guide classes.
+
+- **Before making any component, class or variable, look for it on the
+  site first** (`query_components`, `query_styles`, `query_variables`) and
+  use it. A new one needs a reason in `HANDOFF.md`.
+- **Every UI icon is an instance of the Icon component** (Phosphor:
+  `ph ph-<name>` in its Icon prop; Size and Color variants). Never an SVG
+  upload, an embed, an Image, a custom `i`/`div`, or a redrawn shape. In a
+  button, use C | Button's Icon / Icon Before / Icon After props, or
+  C | Icon Button. Pick the nearest Phosphor icon to the Figma one and list
+  any that have no close match as an open decision.
+- SVG is only for the logo, brand marks and illustrations (the line art).
+- **In the prototype** an icon is the Icon component's markup with its
+  marker: `<i class="ph ph-<name>" aria-hidden="true" data-component="Icon">&nbsp;</i>`
+  inside the Icon wrapper, never an exported SVG. Buttons use the
+  C | Button markup with `data-component="C | Button"`.
 
 ## CSS policy — Designer first
 
