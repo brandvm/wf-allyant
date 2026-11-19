@@ -20,12 +20,24 @@ Geist Mono v1.9.2, logo in `../Assets/brand/`). CMS plan v1 drafted (below,
 in Figma › CMS Planning, and as Dev Mode annotations on every CMS section of
 "For Dev"), awaiting approval. Rule added: reuse the site's components
 (Icon, C | Button…) — AGENTS.md › Reuse what the site already has.
-Next, in a session opened in `Allyant/` with the `webflow-allyant` MCP:
-1. Read-only inventory of the Webflow site (components, variables, classes)
-   against the starter list; record it under Components to make.
-2. Webflow snapshot → `pnpm css` → checks; then the style guide, divided
-   across pages in `design › style-guide` (Decisions, 2026-11-19).
-Nothing is committed yet (setup changes, AGENTS.md, GOTCHAS.md, HANDOFF.md).
+Done in the session opened in `Allyant/` with the `webflow-allyant` MCP:
+1. ✅ Read-only inventory of the Webflow site against the starter list
+   (Components to make › Site inventory).
+2. ✅ Webflow snapshot, 2026-11-19: read through the MCP (all variables
+   with every mode, all classes at every breakpoint and state, the 15
+   component variant styles) and compared with
+   `../prototype/webflow-snapshot/`. They match exactly, so the snapshot
+   shipped with the prototype starter is the site's snapshot and was not
+   rewritten. Known MCP limits, kept by hand as the README says: the
+   `calc()` padding-top on Is Hero and Is Top (the read returns only Nav
+   Height) and the breakpoint modes. Not in the snapshot by design: the
+   Sg classes (86) and the empty combo Body L › Max Width Text. `pnpm css`,
+   `pnpm check:snapshot` (8 collections, 151 variables, 89 styles) and
+   `pnpm check:drift` (no drift against wf-allyant.webflow.io) all pass.
+Setup committed on branch `setup/allyant` (not pushed, not merged).
+Next: the style guide, divided across pages in `design › style-guide`
+(Decisions, 2026-11-19), starting with the variable proposals (old → new)
+for the design's colours, type, spacing and radius.
 
 ## Ground rules for this project
 
