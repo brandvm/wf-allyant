@@ -35,9 +35,129 @@ Done in the session opened in `Allyant/` with the `webflow-allyant` MCP:
    `pnpm check:snapshot` (8 collections, 151 variables, 89 styles) and
    `pnpm check:drift` (no drift against wf-allyant.webflow.io) all pass.
 Setup committed on branch `setup/allyant` (not pushed, not merged).
-Next: the style guide, divided across pages in `design › style-guide`
-(Decisions, 2026-11-19), starting with the variable proposals (old → new)
-for the design's colours, type, spacing and radius.
+3. ✅ Style guide in the prototype, split across pages, frame in Allyant's
+   look (Decisions, 2026-11-19).
+4. ✅ Variable proposals in `../prototype/src/css/proposed.css`, approved
+   2026-11-19: A colour (P1–P5), B type (P6–P9), C spacing, radius and
+   layout (P11–P13). P10 decided: buttons and card titles stay in Geist (no Host Grotesk).
+   The four small Figma accents are annotation colours only (the
+   "Detail · …" panels), not site colours: not proposed. Ink tints decided: Figma's 70/64/50/45/40 % round
+   to Ink 64 and Ink 48. (Radius 43/44 is Pill: every one is on a 24–65 px tall tag, pill or avatar.)
+5. ✅ Batch D, buttons and form (P14–P33), approved 2026-11-19; P34
+   (hugging) added at the person's request the same day: button sheen, Secondary in ink (hover inverts), new Dark and
+   Large variants, label = icon size, Button Is Disabled, button label
+   white on hover (Button/Text Hover), mono uppercase labels, 54 px
+   fields, custom select/checkbox/radio (Webflow custom inputs), help,
+   error and Optional text, form messages, focus ring for the keyboard
+   only (module focus-modality, repo), textarea not resizable, custom
+   select list (module custom-select, repo; P31), status colours with
+   tints and coloured, line-centred icons in form messages (P32). The
+   style guide shows every state (Default, Hover, Keyboard focus,
+   Pressed, Disabled; light and Dark) and its specimens are usable (not
+   inert). Three prototype modules move to the repo with the build:
+   focus-modality, custom-select (webflow-forms is a prototype stand-in).
+   Hugging (P34): Form and Form Field hold children at their own size
+   (align-items flex-start), only fields fill the width, Form Check is
+   inline-flex — so a button's or checkbox's hover and click area is what
+   you see. Audited on all eight style guide pages: no clickable element
+   is wider or taller than what it shows.
+   Motion (P33): the select list grows out of its field (180 ms in,
+   120 ms out), its chevron turns over, buttons shrink to 97 % when
+   pressed and the arrow nudges 3 px on hover; reduced motion drops the
+   movement. No motion on option navigation or focus rings.
+Icons (the person, 2026-11-19): Phosphor **Regular** everywhere, **Bold**
+only in buttons with a text label (C | Button), so the arrow holds its own
+next to the Medium label; icon-only buttons, field chevrons and message
+icons stay Regular. In the build: `pnpm phosphor regular bold` in the
+repo; C | Button's Icon prop default becomes `ph-bold ph-arrow-right`;
+Icon, Icon Size and C | Icon Button keep `ph ph-…`.
+6. Style guide completed 2026-11-19 (the person: "add all five"):
+   - a Logo page (orange, ink, on Dark, the mark at 12/24/48, use rules;
+     files in Assets/brand, the mark exported from Figma as
+     allyant-mark-*.svg);
+   - the pages show the approved system, not Webflow's current values:
+     `prototype/scripts/approved-snapshot.mjs` applies proposed.css to a
+     copy of the snapshot (.sg-approved/) and the generator draws from it;
+     one list, no markers (the person: nothing is in Webflow yet; what
+     the build must make is in Webflow build list below). The class
+     check, check:snapshot and check:drift still use the real snapshot;
+   - P35 Chip in the design's style (orange mono caps, the Allyant mark,
+     faint orange border, hugs its text in any container; NEW Accent
+     Tint/Accent 12, NEW class Chip Mark), approved;
+   - P36 NEW class Text Link (orange, underline on hover, keyboard ring),
+     All Links tag unchanged, approved;
+   - Figma icons mapped to Phosphor on the Components page: every one has
+     a close match (Regular by default, Bold in text buttons, Fill for the
+     solid ones: stars, play, share, home). LinkedIn is the SVG logo,
+     not Phosphor (Decisions). The repo needs
+     `pnpm phosphor regular bold fill`.
+   Pages now: introduction, logo, colour, typography, layout, buttons,
+   forms, components, class-index.
+Next: the person reviews the whole style guide at 1440, 820, 667 and 390
+and approves it (gate: Prototype style guide approved), then the first
+content page (Home).
+7. 2026-11-19 (the person: nav and footer first, then the Home hero with
+   its scroll animation; Lenis in this project) — in the prototype,
+   **awaiting review**:
+   - Nav (`partials/nav.html`, module `nav`): logo and light glass pill at
+     the top; once scrolled the pill moves to the centre (FLIP, 450 ms)
+     and "Talk to Allyant" fades in; over the hero photo the pill turns
+     to dark glass (Is On Dark). Tablet and phone: Menu button and a
+     panel. G | Nav W fixed (P38).
+   - Footer (`partials/footer.html`): light panel with links, offices,
+     credentials; orange CTA card. G | Footer W padding (P39).
+   - Fluted texture: as Figma draws it (the person, 2026-11-20: the
+     animated shader tried first was removed). Each panel's background is
+     exported from Figma with its fill and texture layer already blended
+     (light: #E7E5DF + texture OVERLAY 70 %; primary: radial
+     #FFB9A4→#F2592B + texture SCREEN 20 %; the texture image greyscale,
+     exposure −6 %, highlights +16 %), in
+     `prototype/public/images/textures/footer-panel-*.webp`, cover, over
+     the fill colour. Other sections with the texture get their own
+     export the same way.
+   - Home hero (`index.html`, module `home-hero`, GSAP ScrollTrigger and
+     Lenis): pinned for 1.2 screens, the photo opens from its rounded
+     frame to full screen and widens, the shade lifts, heading and card
+     blur away upward, the round arrow appears. Glass variants on Button
+     Color and Icon Button Box (P37), Chip Is Glass.
+   - Lenis + GSAP from the skill's recipe (`pnpm add gsap lenis` in the
+     prototype; modules `gsap.ts`, `smooth-scroll.ts`, rules in repo.css).
+   Checked at 1440, 820, 667 and 390: no sideways overflow; style guide
+   check passes. P37–P39 need the person's approval.
+   2026-11-20 (the person): nav links 15 px (Figma 13); the nav hides on
+   scrolling down and returns on any scroll up; hero load animation
+   (photo settles, heading parts rise and sharpen in turn, card fades
+   in); the heading parts fade out on scroll in a longer stagger, the
+   card fades in place; the end arrow is a play button that opens the
+   film full screen with sound in a modal (skill's modal recipe) with
+   Allyant's own player controls (glass bar, orange seek bar, mono time,
+   sound, full screen, keyboard; hides when idle); a Koto-style round
+   pause/play toggle with a progress ring for inline autoplay videos only
+   (skill's video recipe). Glass and blurred elements keep their backdrop
+   blur while animating: fades and blurs go on the element itself, never
+   on a parent (GOTCHAS). The film is a silent stand-in made from the
+   hero photo until Allyant supplies the video.
+
+8. 2026-11-20 — Prototype environment at `/design/canvas` (the person: an
+   infinite canvas with the site at three breakpoints and an Inspect
+   panel; to go into wf-template once it holds up). PROTOTYPE-ONLY, never
+   in Webflow:
+   - Desktop 1440, Tablet 820, Mobile 390 side by side, each the real page
+     at that width in a frame; pan (scroll, space-drag), zoom (⌘/pinch,
+     Zoom control, fit). Live (screen-tall, scrolls, motion, sync scroll)
+     or Full page (the whole page, motion off via `?static`, viewport
+     units frozen to the device height).
+   - Inspect (⌥T): pick in any frame; the panel edits at a breakpoint, and
+     edits cascade like Webflow (a smaller breakpoint with its own value
+     keeps it). "Copy for Claude" gives the changes grouped by breakpoint.
+   - UI from kit (`@weftly/components`, `@weftly/editor`, read as source
+     from `../../../Projects/weftlyhq/kit` or `WEFTLY_KIT`; React 19 in the
+     prototype). Code: `prototype/src/canvas/`, `design/canvas/index.html`,
+     the `?static` script in `partials/head.html`.
+   - Before wf-template: kit is private and proprietary, wf-template and
+     client repos are public; how a public template gets kit (a private
+     submodule, a published package, or the environment living in Weftly)
+     is the person's call.
 
 ## Ground rules for this project
 
@@ -84,8 +204,8 @@ only `Primary/bvm-true-black`):
   `../Assets/fonts/` and `../prototype/public/fonts/`.
 - **Colours:** ink `#0E0F0F` (with 70/64/50/45/40 % tints), white,
   orange `#F2592B` (a near-duplicate `#F1592A` to merge), page `#F4F3F0`,
-  surface `#E7E5DF`, grey `#8B9096`; small accents `#0F766E`, `#0D9755`,
-  `#0D5797`, `#5E9A95`.
+  surface `#E7E5DF`, grey `#8B9096`. (`#0F766E`, `#0D9755`, `#0D5797`,
+  `#5E9A95` appear only in the annotation panels.)
 - **Type sizes used most:** 11 (mono labels, +2–4 % tracking), 13, 14, 15,
   16, 18, 20, 24, 32, 40, 48, 64, 80 (display, −6 % to −2.5 % tracking,
   line height 102–110 %); body 14–18 at 145–164 %. Odd values (14.5, 17.8,
@@ -225,11 +345,152 @@ them, not as new components.
 | Footer (content of G \| Footer W) | every page | — (Offices, Credentials from CMS) | — |
 | <Name> | | | |
 
+## Webflow build list
+
+Everything approved in the prototype that Webflow doesn't have yet, in
+build order. Nothing here is in Webflow; each batch is written after a
+go-ahead, then read back (and `pnpm check:drift` after publishing). The
+prototype's style guide already draws all of it. Sources:
+`prototype/src/css/proposed.css` (P1–P36), `new-classes.css`, the
+modules in `prototype/src/modules/`. Tick a line when it's in Webflow and
+read back.
+
+**1. Site settings and uploads** [Person unless noted]
+- [ ] Fonts: upload Geist Mono (`Assets/fonts/`, variable woff2, display
+      swap). Geist is already there.
+- [ ] Head code: paste piece 1 of `loader.html` (Site settings › Custom
+      code); publish.
+- [ ] Assets [Claude, upload]: `intro-meeting-room.webp`, `allyant-mark-orange.svg`,
+      `allyant-mark-white.svg`, Home hero `hero-lab.webp`,
+      `footer-panel-light.webp`, `footer-panel-primary.webp`,
+      `avatar-lab.webp`, `avatar-atrium.webp` (prototype/public/images),
+      `allyant-logo-*.svg` (Assets/brand), `linkedin.svg`
+      (Assets/brand/social), `select-chevron.svg`, `check.svg`,
+      `check-ink.svg` (prototype/public/images/ui).
+
+**2. Variables** [Claude, MCP]
+- [ ] Colors: change Brand/Ink, Brand/Accent, Ink Tint 4–64, Status/Success,
+      Status/Error (P1, P2, P32); new Neutral/Sand, Neutral/Stone,
+      Neutral/Grey (P3), Status/Success Tint, Error Tint, Warning Tint
+      (P32), Accent Tint/Accent 12 (P35).
+- [ ] Colors Semantic: Background/Page → Sand, Background/Surface → Stone
+      (P4), Button/Background → Accent, Background Hover → Ink (P5); new
+      Button/Text Hover, Base and Dark = Paper (P29).
+- [ ] Typography Scale: new Size/11, 13, 15 (P6), Family/Mono (P7),
+      Letter Spacing/Close, Line Height/Solid; change Letter Spacing/Tight,
+      Wide, Line Height/Normal, Snug (P8).
+- [ ] Typography Role: every role's size per breakpoint, weight, line
+      height, tracking; Label → Family/Mono (P9; 26 variables).
+- [ ] Spacing: new 20, 40, 56, 80, 120 (P11). Radius: new 12, 16, 20, 40
+      (P12). Layout: Section Padding V/H, Nav Padding H, Content Gap per
+      breakpoint (P13); new Input/Height 3.375em (P19).
+- [ ] Order: Webflow adds new variables at the end; drag them into place in
+      the Designer if wanted [Person].
+
+**3. Classes** [Claude, MCP; Person where marked]
+- [ ] Changed: Button Color (sheen gradient and inner shadow [Person:
+      gradient and shadow with variables], pressed scale, transitions,
+      hover label colour; P14, P29, P33), Button Color · Secondary variant
+      (ink border, hover inverts; P15), Button Size (heights 3.2em /
+      2.6667em, Small padding and type; P17), Button Icon 1em (P21), Label
+      (mono caps; P18), Form Input (54 px, white, 12 px corners, Body type,
+      placeholder, focus border, no ring; textarea not resizable; P19,
+      P30), Form (flex column, 20 gap, align start; P20, P34), Form Field
+      (align; P34), Chip (P35).
+- [ ] New: Button Is Disabled (P22); Form Input Is Select [Person:
+      custom property appearance none], Is Error, Is Placeholder, Is Open;
+      Label Optional, Form Help, Form Error; Form Check, Form Check Input
+      (+ Is Radio; Checked and Focused states on Webflow's custom checkbox
+      and radio), Form Check Label; Form Message (+ Is Success, Is Error),
+      Form Message Icon; Select Value, Select Chevron (+ Is Open), Select
+      Menu, Select Option (+ Is Active, Is Selected); Chip Mark; Text Link;
+      Social Logo (P23–P28, P31, P35, P36).
+- [ ] Body tag style: Typography › Wrap › Pretty (P40, proposed 2026-11-20).
+- [ ] Nav, footer, hero (batch E, new-classes.css): Nav Logo (+ Img),
+      Nav Menu (+ Is Open), Nav Links (+ Is Scrolled, Is On Dark), Nav
+      Link, Nav Link Plus, Nav Cta (+ Is Scrolled), Nav Toggle (+ Is On
+      Dark, Label); Footer Grid, Main, Top, Logo (+ Img), Col, Links,
+      Link, Text, Credentials, Badges, Badge, Bottom, Meta, Cta, Cta Text;
+      Chip Is Glass; Hero Stage, Frame, Img, Shade, Content, Card,
+      Avatars, Avatar, Scroll, Play, Heading, Actions; Section Is Intro,
+      Intro Grid, Aside, Chip, Main, Statement, Media, Image, Img, Points,
+      Point, Point Rule, Point Text; D1 › Footer Cta Title; Page Grid,
+      Inner, Col (+ Is Last) — four page lines, placed inside G | Page W:
+      Figma's layout grid (3 columns, stretch, margin 40, gutter 0) held to
+      Container Max Width like S Wrapper. Content sections sit in S Wrapper
+      and align to it at every width; the nav, hero and footer are exempt
+      and run full width, 40 px in (the person, 2026-11-20). Chip padding
+      corrected (Spacing/8 16, gap 12: the em variables render at 11/16 on
+      its 11 px label). Changed: G | Nav W fixed, G | Nav
+      flex (P38); G | Footer W padding (P39). [Person: Footer Cta radial
+      gradient.]
+- [ ] Every new class on the style guide page so Clean up unused styles
+      keeps it.
+
+**4. Components** [Claude, MCP; Person where marked]
+- [ ] Button Color: new variant Dark (P16). Button Size: new variant
+      Large (P17). Button Color and Icon Button Box: new variant Glass (P37).
+- [ ] Expose the nested variants as props: Color and Size on C | Button,
+      Size on Icon [Person: Link to new prop; the API can't] (inventory,
+      Components to make).
+- [ ] C | Button: Icon prop default `ph-bold ph-arrow-right`. Icon, Icon
+      Size, C | Icon Button keep `ph ph-…`.
+- [ ] Section Head: the chip gets the Chip Mark image (P35).
+
+**5. Repo** [Claude, commit after an OK]
+- [ ] `pnpm phosphor regular bold fill`.
+- [ ] Smooth scroll: `pnpm add gsap lenis`, the recipe's `gsap.ts`,
+      `smooth-scroll.ts` and `lenis.css` (recipes/smooth-scroll), wired in
+      `src/index.ts` as the recipe says. If Webflow's own GSAP is on (Site
+      settings), turn it off.
+- [ ] Modules `wave-text.ts`, `parallax.ts`, `stagger-scroll.ts` (GSAP
+      SplitText registered in `gsap.ts`).
+- [ ] Modules `nav.ts`, `home-hero.ts`, `video-modal.ts`,
+      `video-player.ts` from the prototype, and the recipes' `modal.ts`,
+      `autoplay-video.ts`, `video-toggle.ts` (with the prototype's
+      progress-ring addition); their `repo-css` rules (nav hide and button
+      fade, hero load lock, modal, player states, toggle
+      ring, Safari video glyphs).
+- [ ] Media page: upload the film (and later inline videos) to
+      /design/media; replace the stand-in `allyant-standin.mp4`.
+- [ ] Modules: `focus-modality.ts`, `custom-select.ts` into
+      `wf-allyant/src/modules/`, registered in `src/index.ts`.
+      (`webflow-forms.ts` is a prototype stand-in for webflow.js: not
+      ported.)
+- [ ] `src/styles.css`: the `repo-css` rules at the end of
+      `new-classes.css` (keyboard ring on fields, native select padding,
+      select list motion, button arrow nudge, reduced motion) and the
+      motion tokens `--ease-ui`, `--ease-ui-move` beside `--ease-bbs`.
+- [ ] `pnpm build`, commit `dist/`, push; check staging.
+
+**6. Style guide in Webflow** [Claude, MCP; Person for the folder]
+- [ ] Folder `design › style-guide` [Person: the API can't make folders];
+      pages introduction, logo, colour, typography, layout, buttons,
+      forms, components, class-index; noindex, out of the sitemap.
+- [ ] Sg classes in Allyant's look (`style-guide-allyant.css`), new Sg Row
+      Classes and Sg Row Sep.
+- [ ] Move the Forms row (Form, Label) before removing the old single
+      `/design/style-guide` page.
+
+**7. Before going live** [Claude checks]
+- [ ] `pnpm check:drift` shows no difference between the prototype and
+      staging; this list is all ticked.
+- [ ] No `data-manual-todo` left on a published page (MANUAL-TODO.md).
+
 ## Modules
 
 | Module | `data-*` hooks | What it does |
 | --- | --- | --- |
-| <name> | `data-…` | |
+| nav | `data-nav`, `data-nav-scroll`, `data-nav-theme-target`, `data-nav-toggle`, `data-nav-menu`; `data-nav-theme="dark"` on dark areas | Is Scrolled after 40 px (pill to the centre, button in), Is On Dark over dark areas, the tablet/phone menu (Escape and outside click close it) |
+| home-hero | `data-hero`, `data-hero-stage`, `-frame`, `-img`, `-shade`, `-content`, `-card`, `-play` | The Home hero scroll story (ScrollTrigger, pinned, scrubbed) |
+| smooth-scroll | — | Lenis on the GSAP ticker (recipe); off under reduced motion |
+| modal | `data-modal`, `data-modal-panel`, `data-modal-close`, `#name` links (recipe) | Dialogs: focus kept inside, Escape and backdrop close, Lenis stopped |
+| video-modal | `data-video-modal` | Plays the film from the start with sound when its modal opens, pauses on close |
+| video-player | `data-player`, `data-player-big`, `-play`, `-time`, `-duration`, `-track`, `-buffer`, `-fill`, `-thumb`, `-mute`, `-fullscreen`, `-controls` | Allyant's player controls for a film with sound; hides them when idle |
+| wave-text | `data-wave-text` (+ `-start`, `-end`, `-from`, `-color`, `-scrub`) | Statement fills letter by letter on scroll: ink 20 % → orange (holds briefly) → own colour; after Osmo's Gradient Wave Text (SplitText) |
+| parallax | `data-parallax` (travel, default 0.06), `data-parallax-target` | Image moves slower than the page inside its frame |
+| stagger-scroll | `data-stagger-scroll`, `data-stagger-item`, `data-stagger-rule` | Items come in one after another with the scroll (rule draws, then content rises) |
+| autoplay-video, video-toggle | `video[autoplay][muted]`, `data-video-toggle`, `data-video-ignore` (recipe) | Inline videos play only on screen; the round pause/play toggle with its progress ring |
 
 ## Decisions
 
@@ -238,12 +499,34 @@ them, not as new components.
 - 2026-11-19 · Spacing on a 4 px base (4, 8, 12, 16, 24, 32, 40, 48, 64, 80, 120…); type sizes taken from what the Figma file uses, rounded to a scale.
 - 2026-11-19 · CMS: conditional visibility on field content instead of switch fields; empty filtered lists hidden in the browser.
 - 2026-11-19 · Copy and images from Figma for development; final assets supplied by the person when needed.
-- 2026-11-19 · Design width range as in the template (1440–1680).
+- 2026-11-20 · Fluid scale set to the Figma frame (src/styles.css §01 and prototype.css): 1em = 16 px at 1440 (`--size-container-ideal: 1440`) and above (`--size-container-max: 1440px`, the person 2026-11-20), holding at 1280 and below down to 992 (`--size-container-min: 1280px`). It had been left at the template's 1680, so every size rendered at 86 % of Figma at 1440. Nav, hero and footer then measured against Figma at 1440 and matched within 2–5 px; known leftovers: the hero heading's line height (Display 1.0, Figma 0.9) and the Large button (225×62, Figma 204×61, approved P17).
+- 2026-11-19 · Host Grotesk is not used: buttons, card titles and filters are set in Geist (P10).
+- 2026-11-19 · Social logos (LinkedIn, the only one in the design) are the networks' own logos as SVG (`Assets/brand/social/`, exported from Figma, currentColor), not Phosphor icons: Phosphor's logo icons aren't good enough. Brand marks, so allowed by AGENTS.md › Reuse what the site already has. Class Social Logo.
 - 2026-11-19 · Style guide: by the person's request its content is divided
   across several pages in the folder `design › style-guide` (the URL
   pattern of https://wf-tvs.webflow.io/design/style-guide/introduction),
-  instead of one page. TVS's pages, layout and scripts are not ported; the
-  split per page is agreed when the style guide starts. In Webflow: the
+  instead of one page. TVS's pages, layout and scripts are not ported.
+  Split agreed 2026-11-19: introduction (Overview), colour (Colors,
+  Themes), typography (Typography, Utilities), layout (Spacing, radius and
+  layout), buttons, forms, components, class-index (Other classes), and
+  sections (Page sections) while page previews exist. The prototype's
+  `scripts/style-guide-pages.mjs` (`pnpm style-guide`, `pnpm
+  check:style-guide`) runs the skill's generator and check on the one page
+  `design/style-guide/index.html`, then cuts it into
+  `design/style-guide/<page>/index.html` with the frame and Sg classes
+  unchanged: the sidebar lists the pages (current page `w--current`, as
+  Webflow's Current state), the first section's title is the page's h1.
+- 2026-11-19 · Style guide frame in Allyant's look, by the person's
+  request: `prototype/src/css/style-guide-allyant.css`, loaded on the split
+  pages after the generated layout. Existing Sg classes only, fixed Figma
+  values (page `#F4F3F0`, ink `#0E0F0F`, orange `#F2592B`, surface
+  `#E7E5DF`, light Geist headings, Geist Mono labels and chips, 16–20 px
+  corners), not the site's variables, so the frame doesn't move with a
+  proposal; specimens still show the variables. In Webflow the same values
+  go onto the Sg classes (style guide build), and Geist Mono must be
+  uploaded first. Two new Sg classes for it: **Sg Row Classes** (a row of
+  class chips that wraps) and **Sg Row Sep** (the › or · between chips),
+  so a class chain is one chip per class and no chip's text wraps. In Webflow: the
   folder is made by the person (the API can't create folders); the
   starter's single page `/design/style-guide` is removed only after its
   Forms row (the reserved Label and Form classes) is on one of the new
@@ -255,10 +538,12 @@ them, not as new components.
 | --- | --- | --- |
 | Insights / blog | Undecided (note in Figma) | Build list + template · leave out |
 | Primary CTA wording | "Talk to Allyant" as the button | Let's Build Differently · Start a Conversation · Discuss Your Project |
-| Host Grotesk (buttons, card titles) | Used 286× in Figma | Keep as a second family · replace with Geist |
 | JetBrains Mono (project numbers/meta) | Used 54× | Replace with Geist Mono (already loaded) · keep |
 | Careers, Our Approach pages | Brand Vision proposals | Keep · drop |
 | Credentials, safety figures | Placeholders | Client to supply |
+| Nav "+" menus | Figma marks five links with "+", no menu designed; links go to their pages | Design the menus · drop the "+" |
+| Hero round arrow | Figma: "Video is playing", a round arrow on the photo; links to the next section | Play a video · link to a page · keep |
+| Hero card text | Figma Geist Light 24; built as H4 (Regular 24): no Light weight class | Add Weight Light · keep Regular |
 
 ## Stand-in assets and placeholders
 
