@@ -271,6 +271,36 @@ content page (Home).
    in one after another (repo-css stagger; Designer transitions on Nav Menu
    use plain values, not the repo's motion tokens).
 
+12. 2026-11-20 — What We Do and the Service template in the prototype,
+   one subagent per page, merged (style guide check passes, 441 classes;
+   no sideways overflow at 1440, 820, 667, 390; no console errors):
+   - What We Do (`what-we-do/index.html`, Figma 632:4133, `wwd-`): hero,
+     the service journey (Home's Services cards in a 3-column grid, all
+     Services by Order, "View service" in each card), "Three Routes to the
+     Same Outcome" (Figma shows two rows numbered 01 01 and cut off; built
+     three, 01–03, the third [TBC] with a stand-in photo), Related
+     Projects (Home's Featured slider).
+   - Service template (`what-we-do/construction-management/index.html`,
+     Figma 632:4599, `svc-`, modules `svc-accordion`, `svc-deliverables`):
+     breadcrumb, hero with parallax photo; What This Covers (Services strip
+     with arrows); When Owners Choose It (three rows opening one at a
+     time, route panel to the current service and Compare with); How
+     Allyant Runs It (static; Figma has four points, the handoff said
+     five: built four); What You Get (cards widen on hover/focus; 2×2 at
+     991, a sideways row on phone); Related Projects (Featured slider,
+     Delivery method = current, hidden when empty).
+   - New module `hide-if-empty` (the CMS plan's data-hide-if-empty).
+   CMS plan v1.1 (the person, 2026-11-20): Services gets Cover 1–6
+   title/text/image (one illustration per cover; replaces Cover 1–5 and the
+   single Covers image) and Deliverables intro + Deliverable 1–4
+   title/text/image (replaces the Deliverables rich text and image), so the
+   template's six covers and four deliverable cards come from fields; each
+   cover and deliverable card hides when its title is empty. "How Allyant
+   runs it" is four points. Figma updated to match: CMS Planning › 02 ·
+   Services rows, the page map notes, rule 04, the label (v1.1), and the
+   Dev Mode notes on the Service frame's What This Covers and What You Get. The
+   nav has no current state for What We Do yet.
+
 ## Ground rules for this project
 
 - Webflow writes only after a go-ahead from the person running the session.
@@ -332,7 +362,7 @@ taken from the sizes above; colours as primitives → semantic roles.
 
 ## CMS
 
-Plan v1, 2026-11-19 — **awaiting approval.** Drawn in Figma › page
+Plan v1.1 (Services fields updated 2026-11-20, see Status 12) — **awaiting approval.** Drawn in Figma › page
 "CMS Planning". Field names are the Webflow names; *(opt)* = optional.
 
 **Hiding empty content.** No "Show section" switches. A section or element
@@ -347,7 +377,7 @@ switch.
 
 | Collection | Fields | Used on |
 | --- | --- | --- |
-| **Services** (10) · template `/what-we-do/<slug>` | Name · Slug · Order (number, journey 1–10) · Summary (plain, cards) · Thumbnail (image) · Hero image (image) · Hero intro (plain) · Covers intro (plain) · Cover 1–5 title (plain, opt) · Cover 1–5 text (plain, opt) · Covers image (image, opt) · Situation (plain, opt) · When (plain, opt) · Compare with (multi-ref Services, opt) · Deliverables (rich text, opt) · Deliverables image (image, opt) · SEO title (opt) · Meta description (opt) | Home › Services overview (all, by Order) · What We Do › service journey (all, by Order) · Service template · Project template (delivery method) · Contact form "Project type" options |
+| **Services** (10) · template `/what-we-do/<slug>` | Name · Slug · Order (number, journey 1–10) · Summary (plain, cards) · Thumbnail (image) · Hero image (image) · Hero intro (plain) · Covers intro (plain) · Cover 1–6 title (plain, opt) · Cover 1–6 text (plain, opt) · Cover 1–6 image (image, opt; each cover's own illustration) · Situation (plain, opt) · When (plain, opt) · Compare with (multi-ref Services, opt) · Deliverables intro (plain, opt) · Deliverable 1–4 title (plain, opt) · Deliverable 1–4 text (plain, opt) · Deliverable 1–4 image (image, opt) · SEO title (opt) · Meta description (opt) | Home › Services overview (all, by Order) · What We Do › service journey (all, by Order) · Service template · Project template (delivery method) · Contact form "Project type" options |
 | **Projects** · template `/projects/<slug>` | Name · Slug · Client (ref Clients) · Sector (ref Sectors) · Delivery method (ref Services) · Delivery label (plain, opt — e.g. "Construction Management – Fast Track"; falls back to the service name) · Location (plain, "Burlington, ON") · Region (option, filter) · Year (number, opt) · Size sf (number, opt) · Size range (option, filter) · Budget (plain, opt) · Status (option, opt) · Thumbnail (image) · Hero image (image) · Excerpt (plain) · About (rich text) · About image 1–2 (image, opt) · Challenge (rich text, opt) · Approach (rich text, opt) · Result (rich text, opt) · Story image (image, opt) · Outcome 1–3 label (plain, opt) · Outcome 1–3 text (plain, opt) · Systems (rich text, opt) · Scope (rich text, opt) · Gallery (multi-image, opt) · Featured order (number, opt) · Sort order (number) · SEO title (opt) · Meta description (opt) | Home › Featured projects (Featured order is set, ascending) · Projects › grid (Sort order; filters Sector / Delivery method / Size range / Region; "View more") · Service template › Related projects (Delivery method = current service) · Project template › Related projects (exclude current) · What We Do › Featured projects |
 | **Sectors** (6) · no page | Name · Slug · Number (plain, "01") · Summary (plain) · Image (image) · Order (number) | Home › Industries · Our Approach › Industries · Projects filter · Project › At a glance |
 | **Clients** · no page | Name · Slug · Logo (image, opt) · Website (link, opt) | Project › Client · Home › Proof of Partnership logo row (Logo is set) · Projects › Repeat clients |
@@ -363,7 +393,7 @@ page" get a 301 to their listing page (or stay in draft) and are excluded
 from the sitemap.
 
 Static (not CMS): nav, footer links, Home hero, "How Allyant runs it"
-(the same five points on every service), stats (100+, 99%, 5/5), Why
+(the same four points on every service, as Figma draws it), stats (100+, 99%, 5/5), Why
 Allyant cards, Our Approach and Company sections other than Team/Offices.
 
 ## Components to make
