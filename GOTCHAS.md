@@ -88,3 +88,12 @@ collected from client repos into those files.
 - Fix: re-freeze on every change in the frame's head (MutationObserver), and size the frame from the body's own height. `prototype/src/canvas/frames.ts` (keepViewportUnitsFrozen), `App.tsx`.
 - Status: open
 - Found by: human
+
+### 2026-11-20 · GSAP folds an element's CSS `scale` into its transform
+- Area: js
+- Scope: template-candidate
+- Symptom: the Featured "Scroll" cursor bubble showed at 60 % size all the time (82 px instead of Figma's 120).
+- Cause: CSS hid it with `scale: 0.6` and showed it with `scale: 1`; GSAP moving it with x/y read the computed `scale` into its own transform matrix and set the property to none, so the CSS show/hide scale never applied again.
+- Fix: move the element with the CSS `translate` property, eased through a plain object (`gsap.quickTo(pos, 'x', { onUpdate })`), and leave `scale` to CSS. Or keep GSAP transforms and CSS `scale` on different elements. `prototype/src/modules/featured-slider.ts`.
+- Status: open
+- Found by: human

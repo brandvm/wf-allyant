@@ -185,6 +185,80 @@ content page (Home).
    scrolls sideways (phone), the current tab slides into view as the stages
    advance, scrolling only the row.
 
+10. 2026-11-20 — Four more Home sections in the prototype, built by
+   subagents in parallel (the person watched their cursors on the canvas),
+   checked at 1440, 820 and 390 (no sideways overflow; style guide check
+   passes):
+   - The Traditional Model photo card (Figma 632:317; section
+     `#traditional-model`, module `model-scroll`): full width like the hero
+     (Section Padding H in, no max width). Pinned: the photo opens from the
+     card's rounded box to the whole screen and settles from a touch
+     closer, then the nine problems move up one at a time (100/60/40/20 %),
+     the photo crossfading lab → glassware → site at problems 4 and 7, each
+     zooming out 1.12 → 1; parallax as it leaves. Dark glass cards with the
+     pill number for all nine (the person). Reduced motion: not pinned, all
+     nine shown.
+   - What Makes Allyant Different (632:373; `diff-` classes): staircase
+     of six photo cards (parallax, stagger-scroll); two columns at 991; a
+     snapping sideways row at 767 and below.
+   - Services Overview (632:441; `services-` classes, module `services`):
+     heading photo opening with the scroll, ten cards in a drag/arrow strip
+     (arrows and progress line added: not in Figma); 07–10 [TBC].
+   - Featured Projects (632:477; `featured-` classes, module
+     `featured-slider`): centred slider, drag/click/keys, mouse cursor
+     bubble; all five cards EmpowerPharm as in Figma, sector [TBC].
+   Open from these: "Greater clarity." as the first of nine problems;
+   Featured chip reads "What we do" (Figma copy slip?); Services arrows
+   not in Figma.
+   Later the same day (the person): the photo card opens full width like
+   the hero and fills the screen on any window; Services title left
+   aligned, its heading photo cropped to the engineer's head, the strip's
+   edges masked (right until the end, left only once it has moved; mask is
+   repo-css) instead of a stone gradient, and it ends as far from the right
+   as it starts from the left; Featured cursor bubble exactly as Figma (120 px,
+   11 px label, 14 px carets; it had rendered at 60 % because GSAP folded
+   its CSS scale into its transform), no native link drag (it froze or
+   vanished on a press); a click on a side card moves one card (focus and
+   click had each moved it); stage tabs: the
+   bars under the panel are gone, each tab fills from the left as its own
+   tracker (::before, repo-css; Why Progress, Bar, Bar Fill dropped from
+   the build list); Shift+G hides and shows the page lines (module
+   page-grid-toggle; whether it ships to the site is open).
+   Featured Projects now loops and its photos move in parallax as the
+   cards slide, on smooothy (npm `smooothy` 0.0.35, MIT, by Federico
+   Valla; the person approved adding it): Featured Img is 120 % of the
+   card for the travel, the 16 px gap is the item's padding (smooothy
+   spaces items by their width). Build list: `pnpm add smooothy` in the
+   repo with the featured-slider module.
+
+11. 2026-11-20 — The rest of Home, one subagent per section, merged into
+   index.html and new-classes.css (style guide check passes, 341 classes):
+   Proof of Partnership (`partner-`, module `logo-marquee`; all copy and
+   client logos are Figma placeholders), Partners on Trust video (`trust-`,
+   stand-in video, band 40 px in where Figma has 24), Industries
+   (`industries-`), The Outcome (`outcome-`; Figma has no stats here), Why
+   Allyant? (`whyal-`). Figma's last frame (632:1349) is the footer, already
+   built. Motion: the nine Outcome icons loop (CSS inside each SVG: dashes
+   flow, dots travel or pulse, rings turn; reduced motion stops them); the
+   Why Allyant cards' line art has a light running along its lines (module
+   `line-shine`, lines-only masks `whyal-card-*-lines.webp`; in Webflow the
+   mask is an asset URL in the data-line-shine attribute). A separate
+   session made motion consistent site-wide (`prototype/MOTION.md`,
+   `src/modules/motion.ts`); the new sections still need its pass.
+   Then (the person): heading photos are one shared pill, Title Pill /
+   Title Pill Img (1.9375 × 1.0156em of the heading, Figma's 124 × 65 at
+   64 px; replaces Services Title Media/Img and Whyal Title Pill/Img),
+   opening sideways from 0 as the heading comes on screen, as on
+   brandvm.com (module `title-pill`; its width follows the scroll, open
+   from the heading at 90 % of the screen to 55 %, closing again on the way
+   back; the person). Five Title Pill Edge layers (+ Is 2–Is 5) over
+   the photo give it brandvm.com's glassy bevel: inset box shadows with
+   darken / overlay / lighten blending, all Designer styles. The client logo row: logos at 40 % on the
+   images (the row's own opacity is the reveal's), and the loop follows the
+   scroll: faster with scroll speed, left on the way down, right on the way
+   up, easing through each change (module `logo-marquee`, GSAP ticker, no
+   CSS animation).
+
 ## Ground rules for this project
 
 - Webflow writes only after a go-ahead from the person running the session.
@@ -444,7 +518,7 @@ read back.
       Inner, Col (+ Is Last) — four page lines; Why Head, Head Main, Intro,
       Stages, Panel, Media, Media Img (+ Is Active), Content, Tabs, Tab
       (+ Is Active), Tab Num, Stage Stack, Stage, Stage Text, Results,
-      Result, Result Dot, Progress, Bar, Bar Fill, Foot, Foot Text, Foot
+      Result, Result Dot, Foot, Foot Text, Foot
       Title, Foot Note, Foot Action. Page Grid placed inside G | Page W:
       Figma's layout grid (3 columns, stretch, margin 40, gutter 0) held to
       Container Max Width like S Wrapper. Content sections sit in S Wrapper
