@@ -79,3 +79,12 @@ collected from client repos into those files.
 - Fix: open. The spec should read `devPort` from webflow-build.config.json (template fix). CI and the staging deploy fail on push until then.
 - Status: open
 - Found by: claude
+
+### 2026-11-20 · Canvas Full page frame grew without limit
+- Area: js
+- Scope: template-candidate
+- Symptom: in the prototype canvas's Full page view the hero sometimes filled a 10,000+ px frame, and a tall empty area stayed below the footer.
+- Cause: the vh freeze ran once at load; styles that arrived later (Vite's module CSS, every hot update) brought vh back, so the hero grew with the frame. The frame was sized from `documentElement.scrollHeight`, which is never less than the frame itself, so any brief growth stuck.
+- Fix: re-freeze on every change in the frame's head (MutationObserver), and size the frame from the body's own height. `prototype/src/canvas/frames.ts` (keepViewportUnitsFrozen), `App.tsx`.
+- Status: open
+- Found by: human

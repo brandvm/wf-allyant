@@ -154,10 +154,36 @@ content page (Home).
      from `../../../Projects/weftlyhq/kit` or `WEFTLY_KIT`; React 19 in the
      prototype). Code: `prototype/src/canvas/`, `design/canvas/index.html`,
      the `?static` script in `partials/head.html`.
+   - Presence (the person, 2026-11-20): each Claude session and agent
+     working here shows in the canvas, Figma-style: avatars in the
+     toolbar, a list with each one's status and plan step, and a cursor
+     with a label on the element a recent change touched, in every frame.
+     A Claude Code hook (`prototype/scripts/presence-hook.mjs`, registered
+     in the workspace's `.claude/settings.json`) posts each tool call to
+     the dev server's `/__presence`, which pushes it to the canvas live.
+     Agents don't move a mouse: the cursor marks where the work is.
    - Before wf-template: kit is private and proprietary, wf-template and
      client repos are public; how a public template gets kit (a private
      submodule, a published package, or the environment living in Weftly)
      is the person's call.
+
+9. 2026-11-20 — Home › "Why Project Delivery Needs to Change" (Figma
+   632:241), in the prototype, within 2–5 px of Figma at 1440: heading row,
+   the stages panel (fluted texture exported from Figma, OVERLAY 80 %),
+   the bars, the closing line and button. The four stages are tabs (module
+   `stage-tabs`): autoplay starts only on screen, the bars track it; a
+   click or key stops it until the section leaves the screen; hover does
+   not pause (the person). The stages share one grid cell so the tabs
+   never move. Only Design has copy and an image in Figma: Tender, Bid and
+   Build show `[TBC]` and Design's image (Open decisions). Tabs numbered
+   01–04 (Figma 01, 02, 02, 02).
+   Tablet and phone (2026-11-20, the person: "don't take so long"):
+   section 1976 → 1399 at 820 and 1909 → 1358 at 390, desktop unchanged.
+   Tablet keeps image and text side by side (image 40 %); 767 and below
+   stack with the image above (5:2, 16:9 at 479); at 479 the results are a
+   plain list of dots and text, intro 15, closing line 20. When the tab row
+   scrolls sideways (phone), the current tab slides into view as the stages
+   advance, scrolling only the row.
 
 ## Ground rules for this project
 
@@ -360,7 +386,7 @@ read back.
       swap). Geist is already there.
 - [ ] Head code: paste piece 1 of `loader.html` (Site settings › Custom
       code); publish.
-- [ ] Assets [Claude, upload]: `intro-meeting-room.webp`, `allyant-mark-orange.svg`,
+- [ ] Assets [Claude, upload]: `why-panel-light.webp`, `why-stage-design.webp`, `intro-meeting-room.webp`, `allyant-mark-orange.svg`,
       `allyant-mark-white.svg`, Home hero `hero-lab.webp`,
       `footer-panel-light.webp`, `footer-panel-primary.webp`,
       `avatar-lab.webp`, `avatar-atrium.webp` (prototype/public/images),
@@ -415,7 +441,11 @@ read back.
       Avatars, Avatar, Scroll, Play, Heading, Actions; Section Is Intro,
       Intro Grid, Aside, Chip, Main, Statement, Media, Image, Img, Points,
       Point, Point Rule, Point Text; D1 › Footer Cta Title; Page Grid,
-      Inner, Col (+ Is Last) — four page lines, placed inside G | Page W:
+      Inner, Col (+ Is Last) — four page lines; Why Head, Head Main, Intro,
+      Stages, Panel, Media, Media Img (+ Is Active), Content, Tabs, Tab
+      (+ Is Active), Tab Num, Stage Stack, Stage, Stage Text, Results,
+      Result, Result Dot, Progress, Bar, Bar Fill, Foot, Foot Text, Foot
+      Title, Foot Note, Foot Action. Page Grid placed inside G | Page W:
       Figma's layout grid (3 columns, stretch, margin 40, gutter 0) held to
       Container Max Width like S Wrapper. Content sections sit in S Wrapper
       and align to it at every width; the nav, hero and footer are exempt
@@ -443,7 +473,7 @@ read back.
       `smooth-scroll.ts` and `lenis.css` (recipes/smooth-scroll), wired in
       `src/index.ts` as the recipe says. If Webflow's own GSAP is on (Site
       settings), turn it off.
-- [ ] Modules `wave-text.ts`, `parallax.ts`, `stagger-scroll.ts` (GSAP
+- [ ] Modules `stage-tabs.ts`, `wave-text.ts`, `parallax.ts`, `stagger-scroll.ts` (GSAP
       SplitText registered in `gsap.ts`).
 - [ ] Modules `nav.ts`, `home-hero.ts`, `video-modal.ts`,
       `video-player.ts` from the prototype, and the recipes' `modal.ts`,
@@ -490,6 +520,7 @@ read back.
 | wave-text | `data-wave-text` (+ `-start`, `-end`, `-from`, `-color`, `-scrub`) | Statement fills letter by letter on scroll: ink 20 % → orange (holds briefly) → own colour; after Osmo's Gradient Wave Text (SplitText) |
 | parallax | `data-parallax` (travel, default 0.06), `data-parallax-target` | Image moves slower than the page inside its frame |
 | stagger-scroll | `data-stagger-scroll`, `data-stagger-item`, `data-stagger-rule` | Items come in one after another with the scroll (rule draws, then content rises) |
+| stage-tabs | `data-stage-tabs` (`data-stage-duration`), `data-stage-tab`, `data-stage-panel`, `data-stage-media`, `data-stage-bar` | Tabs that autoplay on screen with a bar tracking each stage; an interaction stops it until the section leaves the screen; state on `data-stage-state` / `data-stage-why` |
 | autoplay-video, video-toggle | `video[autoplay][muted]`, `data-video-toggle`, `data-video-ignore` (recipe) | Inline videos play only on screen; the round pause/play toggle with its progress ring |
 
 ## Decisions
@@ -543,6 +574,7 @@ read back.
 | Credentials, safety figures | Placeholders | Client to supply |
 | Nav "+" menus | Figma marks five links with "+", no menu designed; links go to their pages | Design the menus · drop the "+" |
 | Hero round arrow | Figma: "Video is playing", a round arrow on the photo; links to the next section | Play a video · link to a page · keep |
+| Why section: Tender, Bid, Build | Figma has copy, results and an image for Design only; the others show [TBC] and Design's image | Client/designer to supply |
 | Hero card text | Figma Geist Light 24; built as H4 (Regular 24): no Light weight class | Add Weight Light · keep Regular |
 
 ## Stand-in assets and placeholders
