@@ -257,7 +257,19 @@ content page (Home).
    images (the row's own opacity is the reveal's), and the loop follows the
    scroll: faster with scroll speed, left on the way down, right on the way
    up, easing through each change (module `logo-marquee`, GSAP ticker, no
-   CSS animation).
+   CSS animation). Featured Projects got the Services strip's arrows and progress
+   line (the person): the foot's classes are now shared, Slider Foot,
+   Slider Progress (+ Fill) and Slider Nav (were Services Foot, Progress,
+   Progress Fill, Nav), plus Featured Foot for its spacing. On the looping
+   slider the arrows never disable and the progress is a window one
+   project wide that travels round the line, wrapping end to start.
+   Tablet and phone menu fills the screen when open (the person): Nav
+   Menu fixed over the page colour, links 40 px (32 at 767) stacked with
+   rules, Talk to Allyant at the foot, logo and toggle above it; the toggle
+   reads Close with an ×; the page doesn't scroll while open (Lenis
+   stopped), Tab stays inside, Escape or a link closes it. The links rise
+   in one after another (repo-css stagger; Designer transitions on Nav Menu
+   use plain values, not the repo's motion tokens).
 
 ## Ground rules for this project
 
