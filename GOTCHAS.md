@@ -97,3 +97,12 @@ collected from client repos into those files.
 - Fix: move the element with the CSS `translate` property, eased through a plain object (`gsap.quickTo(pos, 'x', { onUpdate })`), and leave `scale` to CSS. Or keep GSAP transforms and CSS `scale` on different elements. `prototype/src/modules/featured-slider.ts`.
 - Status: open
 - Found by: human
+
+### 2026-11-20 · smooothy moves the slider on vertical page scrolls
+- Area: js
+- Scope: template-candidate
+- Symptom: with the pointer over the Featured Projects slider, scrolling the page up or down made the slider glide.
+- Cause: smooothy (0.0.35) always attaches virtual-scroll to its wrapper, whatever `scrollInput` says, and on a mouse or trackpad it applies the wheel's deltaX with no check that the gesture is sideways; a vertical trackpad scroll always carries a little deltaX.
+- Fix: pass `virtualScroll: { mouseMultiplier: 0, touchMultiplier: 0, firefoxMultiplier: 0 }` to switch its wheel input off, and move the slider from our own wheel handler only on a clearly sideways swipe (|deltaX| ≥ 4 and more than 1.5 × |deltaY|). Its own drag and touch swipe are separate and still work. `prototype/src/modules/featured-slider.ts`.
+- Status: open
+- Found by: human
