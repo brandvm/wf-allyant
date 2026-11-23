@@ -1,10 +1,9 @@
 # Session report: 2026-11-23
 
-The Claude Code sessions listed below were archived on 2026-11-23 to keep the Claude app responsive. This file records where each one left off, so a new session can pick up the work.
+The Claude Code sessions listed below were archived and then deleted on 2026-11-23 to keep the Claude app responsive. This file records where each one left off, so a new session can pick up the work.
 
 Read this with `HANDOFF.md` (the project brief and its Status section). If something here conflicts with `HANDOFF.md`, `HANDOFF.md` and the git history are more current.
 
-To reopen a session, go to the Claude app's sidebar → Archived, or use the session link while the app is installed.
 
 ## Open items
 
@@ -30,7 +29,7 @@ Branches not merged into the default branch:
 ### 00 Master
 
 - **Active:** 2026-11-19 → 2026-11-23 11:19
-- **Session:** [local_6b8eba36-e0ed-425a-a14d-06254f349479](claude://claude.ai/epitaxy/local_6b8eba36-e0ed-425a-a14d-06254f349479) (archived)
+- **Session:** `local_6b8eba36-e0ed-425a-a14d-06254f349479` (deleted 2026-11-23)
 - **PR:** [brandvm/wf-template#28](https://github.com/brandvm/wf-template/pull/28)
 - **Started with:** "Inventory the Allyant Webflow site (6aff472323df3b1e36cc8be7) read-only: list every component with its props and variants, the variable collections, and the classes, then compare them with the starter’s list in AGENTS.md › Reuse what the site already has. Record what exists, what’s missing and any d…"
 - **Where it ended:** wf-allyant now has only master: it holds all 7 commits from the old branch, pushed to GitHub, and that branch is deleted locally and on GitHub.
@@ -42,7 +41,7 @@ Branches not merged into the default branch:
 ### Make motion consistent across the prototype
 
 - **Active:** 2026-11-20 → 2026-11-20 16:16
-- **Session:** [local_1054623b-395a-43d6-a26f-f919f63e09bc](claude://claude.ai/epitaxy/local_1054623b-395a-43d6-a26f-f919f63e09bc) (archived)
+- **Session:** `local_1054623b-395a-43d6-a26f-f919f63e09bc` (deleted 2026-11-23)
 - **Started with:** "Background (from the session that started this one): Allyant is a Webflow site being prototyped on localhost before the Webflow build. The prototype mirrors Webflow classes and variables; JavaScript behaviour and CSS the Designer can't express move later to the repo `wf-allyant` (public GitHub repo)…"
 - **Where it ended:** The six new pages are on the motion system and in MOTION.md, with the dot field listed as an ambient loop.
 - **Recent progress:**
@@ -53,7 +52,7 @@ Branches not merged into the default branch:
 ### Webflow MCP folder setup
 
 - **Active:** 2026-11-19 → 2026-11-19 14:46
-- **Session:** [local_a632933b-2627-4c02-b96d-d68c3f7ff877](claude://claude.ai/epitaxy/local_a632933b-2627-4c02-b96d-d68c3f7ff877) (archived)
+- **Session:** `local_a632933b-2627-4c02-b96d-d68c3f7ff877` (deleted 2026-11-23)
 - **Started with:** "Setup webflow mcp setup on project folder for folder level webflow mcp access"
 - **Where it ended:** Handoff is ready for the new session: HANDOFF.md › Status lists everything done today and the next two steps (Webflow inventory, then snapshot and style guide).
 - **Recent progress:**
