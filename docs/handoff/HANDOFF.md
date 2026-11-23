@@ -162,6 +162,13 @@ content page (Home).
      in the workspace's `.claude/settings.json`) posts each tool call to
      the dev server's `/__presence`, which pushes it to the canvas live.
      Agents don't move a mouse: the cursor marks where the work is.
+   - All pages (Full page view, the person 2026-11-20): every site page
+     side by side, each at its three breakpoints. Drawn like Figma for
+     speed: pictures for the overview (`pnpm canvas:shots`, or Update
+     pictures in the toolbar; half scale, JPEG, public/canvas-shots/, not
+     committed); a frame runs live only on screen at 30 % zoom or closer
+     (at most four, once the canvas stops moving); nothing off screen is
+     drawn. A page's name opens it. View only (Inspect is off there).
    - Before wf-template: kit is private and proprietary, wf-template and
      client repos are public; how a public template gets kit (a private
      submodule, a published package, or the environment living in Weftly)
@@ -300,6 +307,176 @@ content page (Home).
    Services rows, the page map notes, rule 04, the label (v1.1), and the
    Dev Mode notes on the Service frame's What This Covers and What You Get. The
    nav has no current state for What We Do yet.
+
+13. 2026-11-20 — Projects and the Project template, one subagent per page,
+   merged (style guide check passes, 534 classes; no sideways overflow at
+   1440, 820, 667, 390; no console errors):
+   - Projects (`projects/index.html`, Figma 632:5224, `prj-`): hero (reuses
+     Wwd Hero classes), four filter pills with checkbox menus, count and
+     Reset, 3-column cards, View more, empty state; Repeat Clients panel.
+     Markup is Finsweet Attributes List v2 (`fs-list-*`);
+     `prj-filters.ts` is a prototype stand-in, not ported (in the build:
+     Webflow Dropdowns + `pnpm finsweet add list`). Filter data on all but
+     EmpowerPharm is invented so the filters can be tried; Size and Region
+     options are ours (Under 10k / 10–50k / 50–100k / Over 100k sf;
+     Ontario / Rest of Canada / United States); three [TBC] projects make
+     Figma's count of 9.
+   - Project template (`projects/empowerpharm-…/index.html`, Figma
+     632:5665, `prd-`): breadcrumb, hero, At a Glance, About (sticky chip,
+     wave text, four photo + text pairs), The Story (title pill, accordion),
+     The Outcome, Systems & Scope, Gallery mosaic, Client Quote (hidden
+     without a testimonial), Related Projects (hidden when empty).
+   - Project links agree everywhere (`/projects/bluerock-gmp-manufacturing-
+     facility/`, `/projects/gay-lea-research-and-development-laboratory/`…).
+   - Breadcrumb separator: Figma's own Remix `arrow-drop-right-line`,
+     inline SVG in the text colour (Ink 48) — the person's call, an
+     exception to the Phosphor Icon rule (Decisions); the home icon stays
+     Phosphor.
+   - What We Do hero: its button was cut off while rising on load (Section
+     clips both axes and the hero has no bottom padding); Section · Wwd Hero
+     now overflows downward (overflow-y visible, z-index 1).
+   CMS plan gaps from the Project template (open, for the person): a
+   Statement field (About intro), About 1–4 text + image (the plan has one
+   About and two images), Scope as label/value pairs (separate fields or a
+   "Label: value" line format), and a testimonial photo. Shared class names
+   suggested: the Svc Breadcrumb/Hero/When and Wwd Hero classes now serve
+   several pages (Breadcrumb, Page Hero, Accordion would read better), and
+   one Title Line class for the three heading-with-photo lines.
+
+14. 2026-11-20 — Page transitions site-wide (the person: Osmo Supply's
+   "Stacked Cards"), on the build skill's Barba recipe, in the prototype:
+   - `@barba/core` 2.10.3 (approved); recipe files `transition.ts`,
+     `pages.ts`, `barba.d.ts`; GSAP CustomEase registered with Osmo's
+     `osmo` ease (0.625, 0.05, 0, 1).
+   - Markup on every page: `data-barba="wrapper"` on G | Page W,
+     `data-barba="container"` + `data-barba-namespace` on G | Main W (the
+     footer inside it); the nav stays outside. New classes Transition and
+     Transition Middle (the orange card, Brand Accent) outside the
+     container.
+   - The animation: the leaving page, the orange card and the arriving
+     page shrink and drop one after another with rounded corners, the new
+     page grows back to full size (sync). Reduced motion: instant swap.
+     Made more noticeable (the person: the pages share one sand colour):
+     a darker sand stage behind the cards while it plays (#CDCBC6, Stone
+     under Ink 12 %, the person's pick over ink; data-transitioning,
+     repo-css), the Allyant mark and the arriving page's name on the orange
+     card (Transition Label, Transition Mark, D1 › Transition Title), and a
+     deeper shrink (0.9 / 0.82 / 0.74; Osmo's 0.95 / 0.875 / 0.8).
+     Hero Img rests at scale 1.15 on its class, and the transition sets the
+     arriving Home hero's frame up before showing it (no snap; GOTCHAS).
+     Repo CSS no longer reads Webflow variables (24 references in 11 blocks
+     replaced by their values; GOTCHAS).
+   - `main.ts` split: global modules once (smooth-scroll, focus-modality,
+     page-grid-toggle, nav — closes its menu before a page leaves and
+     re-reads its state after) and page modules again on every page,
+     torn down when it leaves. `pages.ts` (Allyant addition) also records
+     observers, ticker callbacks, ScrollTrigger events, media-query
+     listeners and intervals a module starts, so our modules need no
+     clean-up code of their own.
+   - After a transition, entrances skip what is already on screen (the
+     cards just showed it; `pageArrival` in motion.ts): no flash.
+   - Checked: seven swaps between all five pages without a reload; each
+     page always comes back with the same ScrollTriggers, ticker callbacks
+     and height; Home's two pins rebuilt; no console errors. The
+     Webflow-only parts of the recipe (forms, Turnstile, IX2, head tags)
+     can't run in the prototype (no webflow.js): check them on staging
+     with `pnpm wf:transitions` and a real form submit (recipe › step 7).
+   Also (the person): Intro Grid is a third and two thirds with no gap, so
+   the statement and photo start on the page grid's second line (Home
+   intro and the Project template's About).
+
+15. 2026-11-20 — The remaining pages, one subagent per page, merged (style
+   guide check passes, 882 classes; no sideways overflow at 1440, 820, 667,
+   390; no console errors): Our Approach, Company, Contact, Insights, the
+   Insights article (Insights built on the person's go-ahead, though still
+   undecided above) and a 404 (designed here, not in Figma; a utility page:
+   MANUAL-TODO when built).
+   - Our Approach › We Think Like Owners (module `oa-owners`): pinned from
+     768 px, half a screen per point; the current point shows, its rule
+     fills, a photo per point crossfades and zooms out 1.12 → 1 (01 and 05
+     from Figma, 02–04 Home's Different photos). Phones and reduced motion:
+     every point in the flow.
+   - Our Approach › A Route Through Every Project: stage-tabs in scroll
+     mode (`data-stage-scroll`, `data-stage-pin`, `data-stage-zoom`): pinned
+     from 768 px, the scroll steps through the ten services, the tab line
+     fills through each stretch, the photo zooms out; a click scrolls to
+     that service. Phones: autoplay tabs as before. Then (the person): the
+     section is a screen tall (stages at its foot); a photo per service
+     crossfades and zooms out (01 Figma's desk, the rest the Services
+     photos: CMS Hero image), and the tab row glides with the scroll.
+   - Our Approach hero, the Allyant Method band: opens from its rounded box
+     to the whole screen as it is scrolled, like Home's photo card (module
+     `band-open`; markup: the band's contents in Oa Band Stage); the label
+     and the stage row ride with the edges; photo 1.15 → 1. Once open, the
+     six stages become current one after another with the scroll and the
+     track fills orange up to the current one (new class Oa Method Fill);
+     a dot is current only once the line reaches it; each stage has its
+     own photo, crossfading in as the line nears its dot and zooming out
+     1.12 → 1 through its stage (new combo Oa Band Img Is Later; stand-ins
+     from the site's photos, 03 Figma's site photo: Allyant to supply six);
+     the band keeps room below it so the next section never covers the
+     open photo.
+   - How Allyant Runs It icons (Cost, Schedule, Risk, Quality) loop like
+     Home's Outcome icons (CSS inside each SVG; reduced motion stops them).
+   - Dotted landscape under How Allyant Runs It (Service template, Our
+     Approach): module `dot-field`, a WebGL shader (no library) in place of
+     Figma's video: square dots on whole device pixels, a drifting ridge,
+     dithered greys, a few blinking orange squares; the pointer raises the
+     land and lights the dot under it orange. The image stays as the
+     fallback (no WebGL) and is hidden once it runs (repo-css js-state).
+     Reduced motion: one still frame. A click sends an orange ripple
+     across the field. Lower-end devices keep the image (the person):
+     Save-Data, 4 GB or less, 4 cores or fewer, or a software renderer.
+     2026-11-23 (the person: "the exact diagram with dots"): the floor plan
+     under Built Around the Client (Our Approach) is drawn by the same
+     module in image mode (`data-dot-field-image`, pitch 4.2 px at 1440 =
+     the plan picture's own dot pitch): each cell takes the picture's
+     darkness under it, a slow band of light crosses the lines, rare
+     orange dots blink on them; pointer and click ripple as on the
+     landscape. The random hash no longer uses sin() (it lit stray orange
+     cells at small dot sizes on some GPUs).
+   - 2026-11-23 (the person: the snap after landing, checked on every
+     page): arriving by transition, the hero photos of Service, Project,
+     Company and the article, Contact's supplier photo and Our Approach's
+     Method band jumped once the cards settled. Parallax and band-open now
+     draw their resting state on the arriving page before it shows (as
+     Home's hero); all eleven pages measured clean (GOTCHAS).
+   - Company › Why collaborate with Allyant (2026-11-23, the person: "the
+     same as We Think Like Owners"): it had been built static from Figma's
+     one point; Figma has stages 02 and 03 beside the page (632:8230,
+     632:8249), each with its own photo. Now module `co-why`: from 992 px
+     pinned, the three points one at a time (rising in as on Our
+     Approach), the orange mark sliding down one grey rail (new classes Co
+     Why Rail, Co Why Mark), a photo per point crossfading and zooming out
+     (Figma's three; `why-plans.webp`, `why-team.webp`; new combo Co Why Img
+     Is Later). Below 992 and reduced motion: the three points in a list.
+     The photo no longer has parallax (the pin's zoom replaces it).
+   - Company › Careers card (2026-11-23, the person: "with dots as well"
+     and the portraits floating very subtly): Figma's artwork is a video
+     of dotted roads at 60 % under a stone fade, with seven portrait
+     circles on top; it had been exported flat (careers-team.webp, now
+     unused). Now in its layers: the video's still drawn live in dots by
+     dot-field (image mode; its orange markers kept orange; new settings
+     data-dot-field-ground and data-dot-field-host, the dots keep the
+     picture's opacity), the fade, and the seven portraits (exported from
+     Figma with their 4 px sand ring) floating 4 px each at its own pace
+     (repo-css @keyframes; reduced motion: still). New classes Co Careers
+     Pattern, Fade, People, Avatar (+ Is 1–Is 7). Then (the person: "yes,
+     animate them"): the six orange markers travel along the roads, as in
+     Figma's video (data-dot-field-movers): the module finds each marker
+     in the picture and traces the dark road it sits on (keeping to the
+     middle of the band, coasting over small gaps), then moves it along
+     that road at a steady pace, back and forth or round a loop; at
+     junctions a marker may carry on onto the next road. The picture's own
+     markers are drawn as road. The grey dots keep the picture's 60 %;
+     the markers are at full strength. Reduced motion: markers where the
+     picture has them.
+   Open from these pages: Offices needs a Photo field (Contact, Company);
+   Company's credential figures vs the Credentials collection; Insights
+   categories are placeholders; the LinkedIn URL in Figma reads
+   `allyantdesign0andconstruction` (typo?); Contact's Timing options are
+   ours, and whether to show a map. Shared class names to consider: Page
+   Hero, Breadcrumb, Accordion, one card class.
 
 ## Ground rules for this project
 
@@ -607,6 +784,7 @@ read back.
       `new-classes.css` (keyboard ring on fields, native select padding,
       select list motion, button arrow nudge, reduced motion) and the
       motion tokens `--ease-ui`, `--ease-ui-move` beside `--ease-bbs`.
+- [ ] Page transitions: `pnpm add @barba/core`, the prototype's `transition.ts`, `pages.ts`, `barba.d.ts`, CustomEase in `gsap.ts`; `src/index.ts` split into global and page modules as `prototype/src/main.ts`; Barba attributes on G | Page W and G | Main W; Transition classes. Then `pnpm wf:transitions` on staging and a form submitted after a transition.
 - [ ] `pnpm build`, commit `dist/`, push; check staging.
 
 **6. Style guide in Webflow** [Claude, MCP; Person for the folder]
@@ -637,6 +815,11 @@ read back.
 | parallax | `data-parallax` (travel, default 0.06), `data-parallax-target` | Image moves slower than the page inside its frame |
 | stagger-scroll | `data-stagger-scroll`, `data-stagger-item`, `data-stagger-rule` | Items come in one after another with the scroll (rule draws, then content rises) |
 | stage-tabs | `data-stage-tabs` (`data-stage-duration`), `data-stage-tab`, `data-stage-panel`, `data-stage-media`, `data-stage-bar` | Tabs that autoplay on screen with a bar tracking each stage; an interaction stops it until the section leaves the screen; state on `data-stage-state` / `data-stage-why` |
+| transition, pages | `data-barba` wrapper/container/namespace, `data-transition-wrap`, `data-transition-middle`, `data-barba-prevent` | Barba page transitions (stacked cards); global vs page modules, teardown on leave (recipe barba) |
+| dot-field | `data-dot-field` (pitch px at 1440) on the image; `data-dot-field-image` draws the image itself in dots | WebGL dotted landscape, or an image redrawn in dots (the floor plan); pointer and click ripple; image as fallback |
+| band-open | `data-band-open`, `data-band-stage`, `-img`, `-label`, `-foot` | A photo band opens to the whole screen on scroll (pinned) |
+| co-why | `data-why`, `data-why-point`, `data-why-mark`, `data-why-img` | Company › Why collaborate: pinned from 992 px, a point and photo per step |
+| oa-owners | `data-owners`, `data-owners-point`, `-rule`, `-img` | Our Approach owners: pinned, a photo per point |
 | autoplay-video, video-toggle | `video[autoplay][muted]`, `data-video-toggle`, `data-video-ignore` (recipe) | Inline videos play only on screen; the round pause/play toggle with its progress ring |
 
 ## Decisions
@@ -647,6 +830,7 @@ read back.
 - 2026-11-19 · CMS: conditional visibility on field content instead of switch fields; empty filtered lists hidden in the browser.
 - 2026-11-19 · Copy and images from Figma for development; final assets supplied by the person when needed.
 - 2026-11-20 · Fluid scale set to the Figma frame (src/styles.css §01 and prototype.css): 1em = 16 px at 1440 (`--size-container-ideal: 1440`) and above (`--size-container-max: 1440px`, the person 2026-11-20), holding at 1280 and below down to 992 (`--size-container-min: 1280px`). It had been left at the template's 1680, so every size rendered at 86 % of Figma at 1440. Nav, hero and footer then measured against Figma at 1440 and matched within 2–5 px; known leftovers: the hero heading's line height (Display 1.0, Figma 0.9) and the Large button (225×62, Figma 204×61, approved P17).
+- 2026-11-20 · Breadcrumb separator is Figma's Remix arrow-drop-right-line as inline SVG (currentColor, Ink 48), not a Phosphor icon (the person: "exactly what Figma has").
 - 2026-11-19 · Host Grotesk is not used: buttons, card titles and filters are set in Geist (P10).
 - 2026-11-19 · Social logos (LinkedIn, the only one in the design) are the networks' own logos as SVG (`Assets/brand/social/`, exported from Figma, currentColor), not Phosphor icons: Phosphor's logo icons aren't good enough. Brand marks, so allowed by AGENTS.md › Reuse what the site already has. Class Social Logo.
 - 2026-11-19 · Style guide: by the person's request its content is divided

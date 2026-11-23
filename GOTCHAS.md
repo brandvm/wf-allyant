@@ -106,3 +106,49 @@ collected from client repos into those files.
 - Fix: pass `virtualScroll: { mouseMultiplier: 0, touchMultiplier: 0, firefoxMultiplier: 0 }` to switch its wheel input off, and move the slider from our own wheel handler only on a clearly sideways swipe (|deltaX| ≥ 4 and more than 1.5 × |deltaY|). Its own drag and touch swipe are separate and still work. `prototype/src/modules/featured-slider.ts`.
 - Status: open
 - Found by: human
+
+### 2026-11-20 · Entrances replay on a page swapped in by a transition
+- Area: js
+- Scope: template-candidate
+- Symptom: with the stacked-cards transition, the arriving page showed its content during the transition, then its reveals hid it and played it in again (a flash right after the cards settled).
+- Cause: page modules start after the swap (Barba recipe, afterEnter), so their start states (opacity 0, a load intro) apply to content the transition has already shown.
+- Fix: `pageArrival.swapped` (motion.ts), set by transition.ts before a swapped page's modules start; stagger-scroll leaves on-screen items as they are and home-hero skips its load intro. Below-the-fold reveals play as usual. `prototype/src/modules/`.
+- Status: open
+- Found by: claude
+
+
+### 2026-11-20 · Stacked-cards transition: the orange card has no height
+- Area: js
+- Scope: template-candidate
+- Symptom: the Osmo "Stacked Cards" page transition ran (pages scaled and dropped) but showed no orange card between the pages; it looked like no transition at all.
+- Cause: the transition sets `perspective` on the Barba wrapper, which makes it the containing block of its `position: fixed` children; with both pages fixed during the swap the wrapper (G | Page W) has no height, so the fixed `inset: 0` orange layer collapsed to 0 px. In Osmo's demo the wrapper is `<body>`, which keeps the viewport's height.
+- Fix: set `minHeight: '100vh'` on the wrapper with the perspective, clear it afterwards. `prototype/src/modules/transition.ts`.
+- Status: open
+- Found by: human
+
+### 2026-11-20 · Repo CSS written by page builders read Webflow variables
+- Area: css
+- Scope: template-candidate
+- Symptom: 11 `repo-css` blocks (hover and focus states, accordion, deliverables, filters, the stage tabs' fill, the keyboard ring) used `var(--_colors…)`, `var(--_spacing…)`, `var(--_typography-role…)`, against AGENTS.md › CSS policy rule 4: a variable renamed in Webflow silently breaks them.
+- Cause: subagents building sections copied the surrounding Designer classes' style into their repo-css rules; nothing checks the rule.
+- Fix: each replaced by its approved value (24 references; semantic colours at their Base mode). A check in `pnpm check` that fails on `var(--_` inside a repo-css block would catch it (template).
+- Status: open
+- Found by: claude
+
+### 2026-11-20 · Home hero snaps after arriving by page transition
+- Area: js
+- Scope: template-candidate
+- Symptom: going to Home from another page, the hero photo snapped bigger the moment the page settled.
+- Cause: the transition shows the arriving page before its modules start. The hero module then (1) zoomed the photo to its resting 1.15 and (2) enlarged its frame to the whole stage, drawing the rounded box with clip-path — the photo, cover-fit to a bigger box, grew. On a normal load both happen before the first paint.
+- Fix: the resting zoom is on the class (Hero Img `transform: scale(1.15)`), and the transition calls the hero's `fillFrame()` on the arriving page before showing it. Any module that changes layout on start needs the same: its start state on the class, or a prepare step the transition calls. `prototype/src/modules/home-hero.ts`, `transition.ts`.
+- Status: open
+- Found by: human
+
+### 2026-11-23 · Photos jump after a page transition on five pages
+- Area: js
+- Scope: template-candidate
+- Symptom: arriving by page transition at the Service, Project, Company and Insights article pages, the hero photo jumped (≈ 9 % of the page width) the moment the cards settled; Contact's supplier photo by 2 %; Our Approach's Method band photos by 30 %. Home, What We Do, Projects, Insights and 404 were fine.
+- Cause: the same as the Home hero snap: modules start after the arriving page is shown. Parallax enlarged its image to 1.1 and moved it to its scroll position on start (and a `fromTo` drew its 'from' state first); band-open redrew the band's photos a screen wide behind its rounded crop.
+- Fix: both export a prepare step that draws the resting state (`prepareParallax`, `prepareBandOpen`), which transition.ts › prepare calls on the arriving page beside the hero's `fillFrame`; parallax also sets its resting state at once on start (no 'from' frame). Found with a check that pumps GSAP's ticker, arrives at each page through the transition and flags any image that moves more than 1 % of the page width in one frame. Any module that changes the top of a page when it starts needs the same prepare step.
+- Status: open
+- Found by: human
